@@ -5,10 +5,10 @@ export interface SlideImageProps {}
 
 export default function SlideImage(props: SlideImageProps) {
   return (
-    <Slide autoplay arrows={false} duration={3000}>
+    <Slide autoplay arrows={false} duration={2500}>
       {imagesSlide.map((image, index) => (
         <div
-          className='flex items-center justify-center bg-cover bg-center h-screen'
+          className='flex items-center justify-center bg-cover bg-center h-[calc(100vh_-_2rem)]'
           key={index}
           style={{
             backgroundImage: `url(${image.url})`

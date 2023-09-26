@@ -1,6 +1,12 @@
+/* eslint-disable react/no-unescaped-entities */
 import Input from 'src/components/input'
 import SlideImage from 'src/components/slideImage'
-import { Button, Select } from 'antd'
+import { Button, Checkbox, Select } from 'antd'
+import { Link } from 'react-router-dom'
+import path from 'src/constants/path'
+import { useForm } from 'react-hook-form'
+import { Schema, schema } from 'src/utils/rules'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 const { Option } = Select
 
@@ -23,13 +29,28 @@ const options: {
 
 export interface LoginProps {}
 
+type FormData = Pick<Schema, 'email' | 'password'>
+const loginSchema = schema.pick(['email', 'password'])
+
 export default function Login(props: LoginProps) {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm<FormData>({
+    resolver: yupResolver(loginSchema)
+  })
+
+  const handleOnSubmit = handleSubmit((data) => {
+    console.log(data)
+  })
+
   return (
-    <div className='grid grid-cols-12'>
-      <div className='col-span-8 hidden lg:block'>
+    <div className='grid grid-cols-12 p-4 min-h-screen'>
+      <div className='col-span-8 hidden lg:block rounded-tl-lg rounded-bl-lg overflow-hidden'>
         <SlideImage />
       </div>
-      <div className='col-span-12 lg:col-span-4 p-4'>
+      <div className='col-span-12 lg:col-span-4 flex flex-col justify-between'>
         <div className='flex justify-end'>
           <Select onChange={(value) => console.log(value)} defaultValue='vn' style={{ width: 120 }} allowClear>
             {options.map((option) => (
@@ -55,15 +76,46 @@ export default function Login(props: LoginProps) {
             ))}
           </Select>
         </div>
-        <div className='flex flex-col items-center gap-4'>
-          <h1>Login</h1>
-          <form className='mt-6 flex flex-col items-center gap-8'>
-            <div className='flex flex-col gap-4'>
-              <Input type='text' placeholder='Email' id='floating_email' />
-              <Input type='password' placeholder='Password' id='floating_password' />
+        <div className='flex flex-col gap-4 p-0 md:p-8 lg:p-6 lg:pl-10'>
+          <h1 className='text-left text-4xl font-bold'>Welcome!</h1>
+          <form className='mt-6 flex flex-col items-center w-full' onSubmit={handleOnSubmit}>
+            <div className='flex flex-col w-full'>
+              <Input
+                type='text'
+                placeholder='Email'
+                id='floating_email'
+                register={register}
+                name='email'
+                errors={errors.email?.message}
+              />
+              <Input
+                type='password'
+                placeholder='Password'
+                id='floating_password'
+                register={register}
+                name='password'
+                errors={errors.password?.message}
+              />
             </div>
-            <Button type='primary'>Submit</Button>
+            <div className='mt-4'>
+              <Checkbox>
+                <span className='text-[#747474] text-base'>Remember me</span>
+              </Checkbox>
+            </div>
+            <Button className='mt-12 w-full h-14 text-base' type='primary' htmlType='submit'>
+              Sign in
+            </Button>
           </form>
+          <div className='h-[1px] bg-[#C2C3C7] relative mt-6 w-full'>
+            <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 bg-white'>or</span>
+          </div>
+        </div>
+        <div className='flex flex-col gap-2 items-center'>
+          <div className='h-[1px] bg-[#C2C3C7] w-[80%]'></div>
+          <span className='font-semibold text-lg'>Don't have an account?</span>
+          <Link className='text-primary' to={path.register}>
+            Sign up
+          </Link>
         </div>
       </div>
     </div>
