@@ -1,14 +1,19 @@
+import image1 from 'src/assets/img/img1.jpg'
+import image2 from 'src/assets/img/img2.jpg'
+import image3 from 'src/assets/img/img3.jpg'
+import image4 from 'src/assets/img/img4.jpg'
+
 export const imagesSlide: { url: string }[] = [
   {
-    url: 'src/assets/img/img1.jpg'
+    url: image1
   },
   {
-    url: 'src/assets/img/img2.jpg'
+    url: image2
   },
   {
-    url: 'src/assets/img/img3.jpg'
+    url: image3
   },
   {
-    url: 'src/assets/img/img4.jpg'
+    url: image4
   }
 ]
