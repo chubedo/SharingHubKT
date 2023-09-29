@@ -1,13 +1,14 @@
 import { Button, Checkbox, message } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Input from 'src/components/input'
 import SlideImage from 'src/components/slideImage'
 import path from 'src/constants/path'
 import { Schema, schema } from 'src/utils/rules'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useEffect } from 'react'
-import { watch } from 'fs/promises'
+import { useContext, useState } from 'react'
+import { setAccessTokenToLS } from 'src/utils/auth'
+import { AppContext } from 'src/context/app.context'
 
 export interface RegisterProps {}
 
@@ -24,6 +25,9 @@ const initialValue: FormData = {
 
 export default function Register(props: RegisterProps) {
   const [messageApi, contextHolder] = message.useMessage()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { setIsAuthenticated } = useContext(AppContext)
+  const navigate = useNavigate()
   const {
     handleSubmit,
     register,
@@ -38,7 +42,13 @@ export default function Register(props: RegisterProps) {
     if (!data.agree) {
       messageApi.error('Please, I agree with Terms and Privacy')
     } else {
-      console.log(data)
+      setIsLoading(true)
+      setTimeout(() => {
+        setAccessTokenToLS(data.email)
+        setIsLoading(false)
+        setIsAuthenticated(true)
+        navigate(path.home)
+      }, 1000)
     }
   })
 
@@ -103,7 +113,7 @@ export default function Register(props: RegisterProps) {
                 )}
               />
             </div>
-            <Button className='mt-12 w-full h-14 text-base' type='primary' htmlType='submit'>
+            <Button loading={isLoading} className='mt-12 w-full h-14 text-base' type='primary' htmlType='submit'>
               Sign up
             </Button>
           </form>

@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { BrowserRouter } from 'react-router-dom'
 import 'react-slideshow-image/dist/styles.css'
 import ProviderConfig from './config/ProviderConfig.tsx'
+import AppProvider from './context/app.context.tsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,7 +22,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <ProviderConfig>
-          <App />
+          <AppProvider>
+            <App />
+          </AppProvider>
         </ProviderConfig>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
