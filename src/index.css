@@ -7,6 +7,33 @@
   [type='submit'] {
     @apply bg-primary;
   }
+  [aria-label='Close'] {
+    @apply !top-2;
+  }
 }
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  @variants responsive {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  }
+}
+
+.ant-tabs-nav-list {
+  width: 100%;
+  background: rgb(245 245 245);
+}
+.ant-tabs-tab {
+  width: 50%;
+  justify-content: center;
+}

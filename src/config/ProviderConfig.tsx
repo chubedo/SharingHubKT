@@ -8,9 +8,6 @@ export interface ProviderConfigProps {
 const config: ThemeConfig = {
   token: {
     colorPrimary: '#14D0C3'
-  },
-  components: {
-    Checkbox: {}
   }
 }
 

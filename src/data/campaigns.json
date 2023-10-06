@@ -1,0 +1,46 @@
+[
+  {
+    "campaign_id": "001",
+    "fundraiser_id": "12345",
+    "name": "Hỗ Trợ Giáo Dục Cho Trẻ Em Vùng Nông Thôn",
+    "description": "Chiến dịch này nhằm mục tiêu hỗ trợ giáo dục cho trẻ em ở vùng nông thôn, nơi họ gặp nhiều khó khăn trong việc tiếp cận giáo dục chất lượng. Chúng tôi cung cấp sách giáo trình, máy tính, và lớp học ngoại khóa để giúp trẻ em có cơ hội học tốt hơn.",
+    "goal_amount": "20,000 USD",
+    "date_start ": "2023-03-15",
+    "date_end ": "2023-09-15",
+    "date_created": "2023-02-20",
+    "date_updated": "2023-03-15"
+  },
+  {
+    "campaign_id": "002",
+    "fundraiser_id": "23456",
+    "name": "Dự Án Xây Nhà Cho Người Vô Gia Cư",
+    "description": "Chiến dịch *Xây Dựng Nhà Cho Người Vô Gia Cư* nhằm mục tiêu xây dựng và cung cấp các ngôi nhà ổn định và an toàn cho những người vô gia cư ở trong thành phố. Chúng tôi tin rằng một nơi ở ổn định là một bước đầu tiên quan trọng để giúp họ tái khôi phục cuộc sống",
+    "goal_amount": "200,000 USD",
+    "date_start ": "2023-05-01",
+    "date_end ": " 2024-04-30",
+    "date_created": "2023-03-20",
+    "date_updated": "2023-04-10"
+  },
+  {
+    "campaign_id": "003",
+    "fundraiser_id": "34567",
+    "name": "Hỗ Trợ Giáo Dục Cho Trẻ Em Khuyết Tật",
+    "description": "Chiến dịch Hỗ Trợ Giáo Dục Cho Trẻ Em Khuyết Tật nhằm mục tiêu cung cấp hỗ trợ giáo dục và phát triển cho trẻ em khuyết tật. Chúng tôi cam kết đảm bảo rằng mọi trẻ em, bất kể khuyết tật của họ, có quyền tiếp cận giáo dục chất lượng và có cơ hội phát triển toàn diện.",
+    "goal_amount": "50,000 USD",
+    "date_start ": "2023-06-15",
+    "date_end ": "2023-12-15",
+    "date_created": "2023-04-01",
+    "date_updated": "2023-05-10"
+  },
+  {
+    "campaign_id": "004",
+    "fundraiser_id": "45678",
+    "name": "Dự Án Nước Sạch Cho Cộng Đồng Nông Thôn",
+    "description": "Chiến dịch Dự Án Nước Sạch Cho Cộng Đồng Nông Thôn nhằm mục tiêu cung cấp nguồn nước sạch và an toàn cho cộng đồng nông thôn, nơi người dân đang phải đối mặt với sự thiếu hụt nước sạch và sức khỏe yếu kém do sử dụng nước ô nhiễm. Chúng tôi cam kết xây dựng hệ thống cung cấp nước sạch bền vững và đào tạo cộng đồng về việc quản lý và sử dụng nước an toàn.",
+    "goal_amount": "30,000 USD",
+    "date_start ": "2023-07-01",
+    "date_end ": " 2024-06-30",
+    "date_created": "2023-05-01",
+    "date_updated": "2023-06-15"
+  }
+]
