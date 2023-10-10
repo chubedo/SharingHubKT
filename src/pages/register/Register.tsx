@@ -7,48 +7,52 @@ import { Schema, schema } from 'src/utils/rules'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useContext, useState } from 'react'
-import { setAccessTokenToLS } from 'src/utils/auth'
+import { toast } from 'react-toastify'
 import { AppContext } from 'src/context/app.context'
+import { useMutation } from '@tanstack/react-query'
+import { authApi } from 'src/api/auth.api'
+import { omit } from 'lodash'
 
 export interface RegisterProps {}
 
-type FormData = Schema
+export type FormDataRegister = Schema
 const registerSchema = schema
 
-const initialValue: FormData = {
+const initialValue: FormDataRegister = {
   agree: false,
-  confirm_password: '',
+  confirmPassword: '',
   email: '',
-  name: '',
+  fullName: '',
   password: ''
 }
 
 export default function Register(props: RegisterProps) {
   const [messageApi, contextHolder] = message.useMessage()
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const { setIsAuthenticated } = useContext(AppContext)
   const navigate = useNavigate()
   const {
     handleSubmit,
     register,
     formState: { errors },
     control
-  } = useForm<FormData>({
+  } = useForm<FormDataRegister>({
     resolver: yupResolver(registerSchema),
     defaultValues: initialValue
+  })
+
+  const registerMutation = useMutation({
+    mutationFn: (body: Omit<FormDataRegister, 'agree'>) => authApi.register(body)
   })
 
   const handleOnSubmit = handleSubmit((data) => {
     if (!data.agree) {
       messageApi.error('Please, I agree with Terms and Privacy')
     } else {
-      setIsLoading(true)
-      setTimeout(() => {
-        setAccessTokenToLS(data.email)
-        setIsLoading(false)
-        setIsAuthenticated(true)
-        navigate(path.home)
-      }, 1000)
+      registerMutation.mutate(omit(data, ['agree']), {
+        onSuccess: (data) => {
+          toast.success(data.data.message)
+          navigate(path.login)
+        }
+      })
     }
   })
 
@@ -69,8 +73,8 @@ export default function Register(props: RegisterProps) {
                 placeholder='Full Name'
                 id='floating_name'
                 register={register}
-                name='name'
-                errors={errors.name?.message}
+                name='fullName'
+                errors={errors.fullName?.message}
               />
               <Input
                 type='text'
@@ -95,8 +99,8 @@ export default function Register(props: RegisterProps) {
                 id='floating_CFpassword'
                 classNameWrapper='mt-1'
                 register={register}
-                name='confirm_password'
-                errors={errors.confirm_password?.message}
+                name='confirmPassword'
+                errors={errors.confirmPassword?.message}
               />
             </div>
             <div className='mt-4'>
@@ -113,7 +117,12 @@ export default function Register(props: RegisterProps) {
                 )}
               />
             </div>
-            <Button loading={isLoading} className='mt-12 w-full h-14 text-base' type='primary' htmlType='submit'>
+            <Button
+              loading={registerMutation.isLoading}
+              className='mt-12 w-full h-14 text-base'
+              type='primary'
+              htmlType='submit'
+            >
               Sign up
             </Button>
           </form>

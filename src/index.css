@@ -8,7 +8,10 @@
     @apply bg-primary;
   }
   [aria-label='Close'] {
-    @apply !top-2;
+    @apply !top-2 !bg-transparent;
+  }
+  [aria-label='close'] {
+    @apply !bg-transparent;
   }
 }
 @tailwind components;
