@@ -14,7 +14,7 @@ export interface MainLayoutProps {}
 
 export default function MainLayout(props: MainLayoutProps) {
   const [isToggle, setIsToggle] = useState<boolean>(false)
-  const { setIsAuthenticated } = useContext(AppContext)
+  const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
@@ -31,6 +31,7 @@ export default function MainLayout(props: MainLayoutProps) {
 
   const handleLogout = () => {
     setIsAuthenticated(false)
+    setProfile(null)
     clearLS()
     navigate(path.login)
   }

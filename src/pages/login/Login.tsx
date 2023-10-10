@@ -8,8 +8,11 @@ import { useForm } from 'react-hook-form'
 import { Schema, schema } from 'src/utils/rules'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useContext, useState } from 'react'
-import { setAccessTokenToLS } from 'src/utils/auth'
 import { AppContext } from 'src/context/app.context'
+import { useMutation } from '@tanstack/react-query'
+import { authApi } from 'src/api/auth.api'
+import { toast } from 'react-toastify'
+import { omit } from 'lodash'
 
 const { Option } = Select
 
@@ -32,29 +35,33 @@ const options: {
 
 export interface LoginProps {}
 
-type FormData = Pick<Schema, 'email' | 'password'>
+export type FormDataLogin = Pick<Schema, 'email' | 'password'>
 const loginSchema = schema.pick(['email', 'password'])
 
 export default function Login(props: LoginProps) {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const { setIsAuthenticated } = useContext(AppContext)
   const navigate = useNavigate()
+  const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const {
     handleSubmit,
     register,
     formState: { errors }
-  } = useForm<FormData>({
+  } = useForm<FormDataLogin>({
     resolver: yupResolver(loginSchema)
   })
 
+  const loginMutation = useMutation({
+    mutationFn: (body: FormDataLogin) => authApi.login(body)
+  })
+
   const handleOnSubmit = handleSubmit((data) => {
-    setIsLoading(true)
-    setTimeout(() => {
-      setAccessTokenToLS(data.email)
-      setIsLoading(false)
-      setIsAuthenticated(true)
-      navigate(path.home)
-    }, 1000)
+    loginMutation.mutate(data, {
+      onSuccess: (data) => {
+        toast.success(data.data.message)
+        setIsAuthenticated(true)
+        setProfile(omit(data.data.user, ['organizations']))
+        navigate(path.home)
+      }
+    })
   })
 
   return (
@@ -114,7 +121,12 @@ export default function Login(props: LoginProps) {
                 <span className='text-[#747474] text-base'>Remember me</span>
               </Checkbox>
             </div>
-            <Button loading={isLoading} className='mt-12 w-full h-14 text-base' type='primary' htmlType='submit'>
+            <Button
+              loading={loginMutation.isLoading}
+              className='mt-12 w-full h-14 text-base'
+              type='primary'
+              htmlType='submit'
+            >
               Sign in
             </Button>
           </form>
