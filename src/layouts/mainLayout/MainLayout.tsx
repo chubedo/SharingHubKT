@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useContext, useEffect, useState } from 'react'
@@ -46,7 +47,7 @@ export default function MainLayout(props: MainLayoutProps) {
             data-drawer-toggle='default-sidebar'
             aria-controls='default-sidebar'
             type='button'
-            className='inline-flex items-center p-2 mt-2 ml-3 text-sm rounded-lg lg:hidden !bg-transparent hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 relative z-20'
+            className='inline-flex items-center p-2 mt-2 ml-3 text-sm rounded-lg lg:hidden !bg-transparent hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 fixed z-20'
           >
             <span className='sr-only'>Open sidebar</span>
             <HiOutlineMenuAlt2 className='w-6 h-6' />
@@ -69,7 +70,13 @@ export default function MainLayout(props: MainLayoutProps) {
                 {dataSideBar.map((data, index) => (
                   <li
                     key={index}
-                    className={`rounded-lg ${data.to === pathname ? 'bg-primary text-white' : 'text-gray-900'} `}
+                    className={`rounded-lg ${
+                      pathname !== '/' && data.to !== '/' && pathname.startsWith(data.to)
+                        ? 'bg-primary text-white'
+                        : data.to === '/' && pathname === '/'
+                        ? 'bg-primary text-white'
+                        : 'text-gray-900'
+                    } `}
                   >
                     <Link
                       to={`${data.to}`}

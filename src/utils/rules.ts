@@ -12,4 +12,10 @@ export const schema = yup.object({
   agree: yup.boolean().required()
 })
 
+export const donationSchema = yup.object({
+  name: yup.string().required('Tên hiện vật là bắt buộc'),
+  status: yup.string().required('Tình trạng là bắt buộc')
+})
+
 export type Schema = yup.InferType<typeof schema>
+export type DonationSchema = yup.InferType<typeof donationSchema>

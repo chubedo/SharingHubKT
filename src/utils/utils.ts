@@ -7,3 +7,5 @@ export const isAxiosError = <T>(error: unknown): error is AxiosError<T> => {
 export const isAxiosErrorUnprocessableEntity = <T>(error: unknown): error is AxiosError<T> => {
   return isAxiosError(error) && error.status === HttpStatusCode.UnprocessableEntity
 }
+
+export type Coordinate = { lng?: string; lat?: string; name?: string }

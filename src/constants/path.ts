@@ -4,6 +4,9 @@ const path = {
   logout: '/logout',
   register: '/register',
   explore: '/explore',
+  campaignDetails: '/explore/:id',
+  volunteerRegister: '/explore/:id/volunteer',
+  donate: '/explore/:id/donate',
   notifications: '/notifications',
   profile: '/profile'
 } as const
