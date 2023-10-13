@@ -7,6 +7,7 @@ import { Campaign } from 'src/types/campaigns.type'
 import { Button, Modal } from 'antd'
 import { useState } from 'react'
 import path from 'src/constants/path'
+import { campaignStatus, statusColor } from 'src/utils/utils'
 
 export interface CampaignDetailsProps {}
 
@@ -60,10 +61,10 @@ export default function CampaignDetails(props: CampaignDetailsProps) {
           </div>
           <h1 className='mt-4 text-xl font-bold text-center'>{campaignDetailsData?.name}</h1>
           <p className='mt-4 flex items-end gap-2'>
-            <span className='text-green-500'>Ongoing</span>{' '}
-            <span className='font-semibold'>
-              {format(new Date((campaignDetailsData as Campaign)?.endDate), 'dd/MM/yyyy')}
-            </span>
+            <span className={statusColor(campaignDetailsData.startDate, campaignDetailsData.endDate)}>
+              {campaignStatus(campaignDetailsData.startDate, campaignDetailsData.endDate)}
+            </span>{' '}
+            <span className='font-semibold'>{format(new Date(campaignDetailsData.endDate), 'dd/MM/yyyy')}</span>
           </p>
           <div className='mt-6 flex flex-col gap-8'>
             <div className='flex flex-col gap-2'>
@@ -180,9 +181,64 @@ export default function CampaignDetails(props: CampaignDetailsProps) {
         </div>
       </div>
       <div className='text-center mt-4'>
-        <button className='w-1/2 p-4 rounded-lg text-white' onClick={showModal}>
-          Tham gia
-        </button>
+        {campaignStatus(campaignDetailsData.startDate, campaignDetailsData.endDate) === 'Đã kết thúc' ? (
+          <div className='flex flex-col gap-16 mt-8'>
+            <div className='flex flex-col'>
+              <h2 className='font-semibold text-xl'>Dự án review</h2>
+              <ul className='flex justify-center gap-8 mt-4'>
+                {Array(5)
+                  .fill(0)
+                  .map((_, index) => (
+                    <li key={index} className='cursor-pointer'>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        fill='none'
+                        viewBox='0 0 24 24'
+                        strokeWidth={1.5}
+                        stroke='currentColor'
+                        className='w-8 h-8'
+                      >
+                        <path
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          d='M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z'
+                        />
+                      </svg>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+            <div className='flex flex-col'>
+              <h2 className='font-semibold text-xl'>Tổ chức review</h2>
+              <ul className='flex justify-center gap-8 mt-4'>
+                {Array(5)
+                  .fill(0)
+                  .map((_, index) => (
+                    <li key={index} className='cursor-pointer'>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        fill='none'
+                        viewBox='0 0 24 24'
+                        strokeWidth={1.5}
+                        stroke='currentColor'
+                        className='w-8 h-8'
+                      >
+                        <path
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          d='M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z'
+                        />
+                      </svg>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          </div>
+        ) : (
+          <button className='w-1/2 p-4 rounded-lg text-white' onClick={showModal}>
+            Tham gia
+          </button>
+        )}
       </div>
       <Modal className='!top-1/3' title='Tham gia' open={isModalOpen} onCancel={handleCancel} footer={null}>
         <div className='flex items-center justify-center gap-6'>

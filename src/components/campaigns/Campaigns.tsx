@@ -1,4 +1,4 @@
-import { Coordinate } from 'src/utils/utils'
+import { Coordinate, campaignStatus, statusColor } from 'src/utils/utils'
 import imageCampaign from 'src/assets/img/campaigns.png'
 import { useQuery } from '@tanstack/react-query'
 import { campaignsApi } from 'src/api/campaigns.api'
@@ -36,7 +36,9 @@ export default function Campaigns({ queryParams, classNameWrapper, classNameImag
                     />
                     <div className='flex flex-col gap-2 text-sm'>
                       <h2 className='font-bold text-xl text-[#3F3F3F]'>{campaign.name}</h2>
-                      <span className='text-green-500'>Đang diễn ra</span>
+                      <span className={statusColor(campaign.startDate, campaign.endDate)}>
+                        {campaignStatus(campaign.startDate, campaign.endDate)}
+                      </span>
                       <div className='flex gap-1 text-[#3F3F3F]'>
                         <svg
                           xmlns='http://www.w3.org/2000/svg'
