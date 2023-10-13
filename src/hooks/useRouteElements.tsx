@@ -4,6 +4,9 @@ import path from 'src/constants/path'
 import { AppContext } from 'src/context/app.context'
 import MainLayout from 'src/layouts/mainLayout'
 import Explore from 'src/pages/explore'
+import CampaignDetails from 'src/pages/explore/pages/campaignDetails'
+import Donate from 'src/pages/explore/pages/donate'
+import VolunteerRegister from 'src/pages/explore/pages/volunteerRegister'
 
 import Home from 'src/pages/home'
 import Login from 'src/pages/login'
@@ -49,6 +52,18 @@ export default function useRoutElements() {
             {
               path: path.profile,
               element: <Profile />
+            },
+            {
+              path: path.campaignDetails,
+              element: <CampaignDetails />
+            },
+            {
+              path: path.volunteerRegister,
+              element: <VolunteerRegister />
+            },
+            {
+              path: path.donate,
+              element: <Donate />
             }
           ]
         }
