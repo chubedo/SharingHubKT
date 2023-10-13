@@ -8,10 +8,10 @@
     @apply bg-primary text-white border-0 hover:!bg-primary hover:!text-white hover:opacity-80;
   }
   [aria-label='Close'] {
-    @apply !top-2 !bg-transparent;
+    @apply !top-2 !bg-transparent !text-black;
   }
   [aria-label='close'] {
-    @apply !bg-transparent;
+    @apply !bg-transparent !text-black;
   }
 }
 @tailwind components;
@@ -44,4 +44,8 @@
 .ant-upload-list-item-container {
   width: 10rem !important;
   height: 10rem !important;
+}
+
+input:-webkit-autofill {
+  -webkit-background-clip: text;
 }
