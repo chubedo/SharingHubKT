@@ -17,5 +17,18 @@ export const donationSchema = yup.object({
   status: yup.string().required('Tình trạng là bắt buộc')
 })
 
+export const registerCampaignSchema = yup.object({
+  name: yup.string().required('Tên chiến dịch là bắt buộc'),
+  image: yup.string().default(''),
+  description: yup.string().required('Mô tả là bắt buộc'),
+  address: yup.string().required('Địa chỉ là bắt buộc'),
+  specificAddress: yup.string().default(''),
+  startDate: yup.string().required('Thời gian bắt đầu là bắt buộc'),
+  endDate: yup.string().required('Thời gian kết thúc là bắt buộc'),
+  registerLink: yup.string().default(''),
+  donationRequirement: yup.string().default('')
+})
+
 export type Schema = yup.InferType<typeof schema>
 export type DonationSchema = yup.InferType<typeof donationSchema>
+export type RegisterCampaignSchema = yup.InferType<typeof registerCampaignSchema>

@@ -10,6 +10,8 @@ import VolunteerRegister from 'src/pages/explore/pages/volunteerRegister'
 
 import Home from 'src/pages/home'
 import Login from 'src/pages/login'
+import Management from 'src/pages/management'
+import ManagementDetails from 'src/pages/management/page/details'
 import NotFound from 'src/pages/notfound'
 import Notifications from 'src/pages/notifications'
 import Profile from 'src/pages/profile'
@@ -46,14 +48,6 @@ export default function useRoutElements() {
               element: <Explore />
             },
             {
-              path: path.notifications,
-              element: <Notifications />
-            },
-            {
-              path: path.profile,
-              element: <Profile />
-            },
-            {
               path: path.campaignDetails,
               element: <CampaignDetails />
             },
@@ -64,6 +58,26 @@ export default function useRoutElements() {
             {
               path: path.donate,
               element: <Donate />
+            },
+            {
+              path: path.management,
+              element: <Management />
+            },
+            {
+              path: path.managementDetails,
+              element: <ManagementDetails />
+            },
+            {
+              path: path.createCampaign,
+              element: <ManagementDetails />
+            },
+            {
+              path: path.notifications,
+              element: <Notifications />
+            },
+            {
+              path: path.profile,
+              element: <Profile />
             }
           ]
         }
