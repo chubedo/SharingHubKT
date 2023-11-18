@@ -7,6 +7,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   classNameWrapper?: string
   register?: UseFormRegister<any>
   ruleMessage?: string
+  idError?: string
 }
 
 export default function Input({
@@ -18,6 +19,7 @@ export default function Input({
   name,
   errors,
   ruleMessage,
+  idError,
   ...rest
 }: InputProps) {
   return (
@@ -39,7 +41,9 @@ export default function Input({
         </label>
       </div>
       {ruleMessage && <span className='text-gray-500 ml-1'>{ruleMessage}</span>}
-      <div className='mt-1 min-h-[1.5rem] text-red-600 text-sm'>{errors}</div>
+      <div id={idError} className='mt-1 min-h-[1.5rem] text-red-600 text-sm'>
+        {errors}
+      </div>
     </div>
   )
 }

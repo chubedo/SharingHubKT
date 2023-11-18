@@ -62,6 +62,8 @@ export default function Login(props: LoginProps) {
         navigate(path.home)
       }
     })
+    // setIsAuthenticated(true)
+    // navigate(path.home)
   })
 
   return (
@@ -96,7 +98,9 @@ export default function Login(props: LoginProps) {
           </Select>
         </div>
         <div className='flex flex-col gap-4 p-0 md:p-8 lg:p-6 lg:pl-10'>
-          <h1 className='text-left text-4xl font-bold'>Welcome!</h1>
+          <h1 className='text-left text-4xl font-bold' id='title'>
+            Sign in
+          </h1>
           <form className='mt-6 flex flex-col items-center w-full' onSubmit={handleOnSubmit}>
             <div className='flex flex-col w-full'>
               <Input
@@ -106,6 +110,7 @@ export default function Login(props: LoginProps) {
                 register={register}
                 name='email'
                 errors={errors.email?.message}
+                idError='email_error'
               />
               <Input
                 type='password'
@@ -114,10 +119,11 @@ export default function Login(props: LoginProps) {
                 register={register}
                 name='password'
                 errors={errors.password?.message}
+                idError='password_error'
               />
             </div>
             <div className='mt-4'>
-              <Checkbox>
+              <Checkbox id='remember_me'>
                 <span className='text-[#747474] text-base'>Remember me</span>
               </Checkbox>
             </div>
@@ -126,6 +132,7 @@ export default function Login(props: LoginProps) {
               className='mt-12 w-full h-14 text-base'
               type='primary'
               htmlType='submit'
+              id='button_submit'
             >
               Sign in
             </Button>
@@ -137,7 +144,7 @@ export default function Login(props: LoginProps) {
         <div className='flex flex-col gap-2 items-center'>
           <div className='h-[1px] bg-[#C2C3C7] w-[80%]'></div>
           <span className='font-semibold text-lg'>Don't have an account?</span>
-          <Link className='text-primary' to={path.register}>
+          <Link id='button_redirect_register' className='text-primary' to={path.register}>
             Sign up
           </Link>
         </div>

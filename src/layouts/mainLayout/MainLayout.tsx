@@ -64,7 +64,9 @@ export default function MainLayout(props: MainLayoutProps) {
                 <li className='mb-12'>
                   <Link to='/' className='flex items-center p-2 text-gray-900 rounded-lg'>
                     <MdVolunteerActivism className='icon' />
-                    <span className='ml-3'>Logo is here!</span>
+                    <span className='ml-3' id='sharing_hub'>
+                      Sharing hub
+                    </span>
                   </Link>
                 </li>
                 {dataSideBar.map((data, index) => (

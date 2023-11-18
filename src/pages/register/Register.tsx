@@ -65,7 +65,9 @@ export default function Register(props: RegisterProps) {
       <div className='col-span-12 lg:col-span-4 flex flex-col justify-between'>
         <div></div>
         <div className='flex flex-col gap-4 p-0 md:p-8 lg:p-6 lg:pl-10'>
-          <h1 className='text-center text-4xl font-bold'>Sign up</h1>
+          <h1 className='text-center text-4xl font-bold' title='sign up' id='title'>
+            Sign up
+          </h1>
           <form className='mt-6 flex flex-col items-center w-full' onSubmit={handleOnSubmit}>
             <div className='flex flex-col w-full'>
               <Input
@@ -75,6 +77,7 @@ export default function Register(props: RegisterProps) {
                 register={register}
                 name='fullName'
                 errors={errors.fullName?.message}
+                idError='error_name'
               />
               <Input
                 type='text'
@@ -83,6 +86,7 @@ export default function Register(props: RegisterProps) {
                 register={register}
                 name='email'
                 errors={errors.email?.message}
+                idError='error_email'
               />
               <Input
                 type='password'
@@ -92,6 +96,7 @@ export default function Register(props: RegisterProps) {
                 name='password'
                 errors={errors.password?.message}
                 ruleMessage='At least 8 characters'
+                idError='error_password'
               />
               <Input
                 type='password'
@@ -101,6 +106,7 @@ export default function Register(props: RegisterProps) {
                 register={register}
                 name='confirmPassword'
                 errors={errors.confirmPassword?.message}
+                idError='error_cf_password'
               />
             </div>
             <div className='mt-4'>
@@ -108,7 +114,7 @@ export default function Register(props: RegisterProps) {
                 name='agree'
                 control={control}
                 render={({ field }) => (
-                  <Checkbox {...field} checked={field.value}>
+                  <Checkbox {...field} checked={field.value} id='agree_rule'>
                     <span className='text-[#747474] text-base'>
                       I agree with <span className='underline text-primary font-medium'>Terms</span> and{' '}
                       <span className='underline text-primary font-medium'>Privacy</span>
@@ -122,6 +128,7 @@ export default function Register(props: RegisterProps) {
               className='mt-12 w-full h-14 text-base'
               type='primary'
               htmlType='submit'
+              id='button_register'
             >
               Sign up
             </Button>
@@ -130,7 +137,7 @@ export default function Register(props: RegisterProps) {
         <div className='flex flex-col gap-2 items-center'>
           <div className='h-[1px] bg-[#C2C3C7] w-[80%]'></div>
           <span className='font-semibold text-lg'>Already have an account?</span>
-          <Link className='text-primary' to={path.login}>
+          <Link className='text-primary' to={path.login} id='redirect_login'>
             Log in
           </Link>
         </div>
