@@ -6,7 +6,12 @@ export type UserData = {
   birthday: string | null
   avatar: string | null
   address: string | null
-  organizations: any[]
+  organizations: {
+    id: number
+    name: string
+    phoneNumber: string | null
+    address: string
+    description: string
+    avatar: string | null
+  }[]
 }
-
-export type Profile = Omit<UserData, 'organizations'>

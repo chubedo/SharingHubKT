@@ -1,9 +1,12 @@
 import { Modal } from 'antd'
 import Upload, { RcFile, UploadFile, UploadProps } from 'antd/es/upload'
+import { UploadListType } from 'antd/es/upload/interface'
 import { useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 
-export interface UploadImageProps {}
+export interface UploadImageProps {
+  listType?: UploadListType
+}
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -13,13 +16,12 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onerror = (error) => reject(error)
   })
 
-export default function UploadImage(props: UploadImageProps) {
+export default function UploadImage({ listType = 'picture-circle' }: UploadImageProps) {
   const [previewOpen, setPreviewOpen] = useState(false)
   const [previewImage, setPreviewImage] = useState('')
   const [previewTitle, setPreviewTitle] = useState('')
   const [fileList, setFileList] = useState<UploadFile[]>([])
   const handleCancel = () => setPreviewOpen(false)
-  console.log(fileList)
 
   const handlePreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
@@ -45,7 +47,7 @@ export default function UploadImage(props: UploadImageProps) {
     <>
       <Upload
         action='https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188'
-        listType='picture-circle'
+        listType={listType}
         fileList={fileList}
         onPreview={handlePreview}
         onChange={handleChange}

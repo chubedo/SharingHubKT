@@ -45,6 +45,10 @@
   width: 10rem !important;
   height: 10rem !important;
 }
+.ant-upload-picture-card-wrapper .ant-upload.ant-upload-select,
+.ant-upload-list-item-container {
+  width: 100% !important;
+}
 
 input:-webkit-autofill {
   -webkit-background-clip: text;

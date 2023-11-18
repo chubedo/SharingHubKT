@@ -12,7 +12,6 @@ import { AppContext } from 'src/context/app.context'
 import { useMutation } from '@tanstack/react-query'
 import { authApi } from 'src/api/auth.api'
 import { toast } from 'react-toastify'
-import { omit } from 'lodash'
 
 const { Option } = Select
 
@@ -58,7 +57,7 @@ export default function Login(props: LoginProps) {
       onSuccess: (data) => {
         toast.success(data.data.message)
         setIsAuthenticated(true)
-        setProfile(omit(data.data.user, ['organizations']))
+        setProfile(data.data.user)
         navigate(path.home)
       }
     })

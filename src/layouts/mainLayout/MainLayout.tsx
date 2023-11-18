@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useContext, useEffect, useState } from 'react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { dataSideBar } from 'src/data/sidebar.dummy'
+import { dataOrganizationSideBar, dataSideBar } from 'src/data/sidebar.dummy'
 import { IoLogOutOutline } from 'react-icons/io5'
 import { HiOutlineMenuAlt2 } from 'react-icons/hi'
 import { MdVolunteerActivism } from 'react-icons/md'
@@ -15,9 +15,10 @@ export interface MainLayoutProps {}
 
 export default function MainLayout(props: MainLayoutProps) {
   const [isToggle, setIsToggle] = useState<boolean>(false)
-  const { setIsAuthenticated, setProfile } = useContext(AppContext)
+  const { setIsAuthenticated, setProfile, isOrganization, setIsOrganization } = useContext(AppContext)
   const { pathname } = useLocation()
   const navigate = useNavigate()
+  const sideBar = isOrganization ? dataOrganizationSideBar : dataSideBar
 
   useEffect(() => {
     setIsToggle(false)
@@ -33,6 +34,7 @@ export default function MainLayout(props: MainLayoutProps) {
   const handleLogout = () => {
     setIsAuthenticated(false)
     setProfile(null)
+    setIsOrganization(false)
     clearLS()
     navigate(path.login)
   }
@@ -50,7 +52,7 @@ export default function MainLayout(props: MainLayoutProps) {
             className='inline-flex items-center p-2 mt-2 ml-3 text-sm rounded-lg lg:hidden !bg-transparent hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 fixed z-20'
           >
             <span className='sr-only'>Open sidebar</span>
-            <HiOutlineMenuAlt2 className='w-6 h-6' />
+            <HiOutlineMenuAlt2 className='w-6 h-6 text-black' />
           </button>
           <aside
             id='default-sidebar'
@@ -69,7 +71,7 @@ export default function MainLayout(props: MainLayoutProps) {
                     </span>
                   </Link>
                 </li>
-                {dataSideBar.map((data, index) => (
+                {sideBar.map((data, index) => (
                   <li
                     key={index}
                     className={`rounded-lg ${

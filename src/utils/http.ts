@@ -2,12 +2,13 @@ import { toast } from 'react-toastify'
 import axios, { AxiosError, AxiosInstance, HttpStatusCode } from 'axios'
 import path from 'src/constants/path'
 import { LoginResponse } from 'src/types/auth.type'
-import { clearLS, setAccessTokenToLS, setProfileToLS } from './auth'
-import { omit } from 'lodash'
+import { clearLS, getAccessTokenFormLS, setAccessTokenToLS, setProfileToLS, setStatusToLS } from './auth'
 
 class Http {
   instance: AxiosInstance
+  private accessToken: string
   constructor() {
+    this.accessToken = getAccessTokenFormLS()
     this.instance = axios.create({
       baseURL: import.meta.env.VITE_BASE_URL,
       timeout: 10000,
@@ -15,13 +16,26 @@ class Http {
         'Content-Type': 'application/json'
       }
     })
+    this.instance.interceptors.request.use(
+      (config) => {
+        if (this.accessToken) {
+          config.headers.Authorization = `Bearer ${this.accessToken}`
+        }
+        return config
+      },
+      (error: AxiosError) => {
+        return Promise.reject(error)
+      }
+    )
     this.instance.interceptors.response.use(
       (response) => {
         const pathUrl = 'auth' + path.login
         if (response.config.url === pathUrl) {
           const data = response.data as LoginResponse
-          setAccessTokenToLS(data.accessToken)
-          setProfileToLS(omit(data.user, ['organizations']))
+          this.accessToken = data.accessToken
+          setAccessTokenToLS(this.accessToken)
+          setProfileToLS(data.user)
+          setStatusToLS(false)
         }
         return response
       },
