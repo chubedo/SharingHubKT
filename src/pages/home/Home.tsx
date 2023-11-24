@@ -38,18 +38,18 @@ export default function Home(props: HomeProps) {
 
   const mapRef = useRef()
 
-  // useEffect(() => {
-  //   navigator.geolocation.getCurrentPosition(
-  //     (position) => {
-  //       const latitude = position.coords.latitude
-  //       const longitude = position.coords.longitude
-  //       setPosition({ lat: latitude, lng: longitude })
-  //     },
-  //     (error) => {
-  //       console.log(error)
-  //     }
-  //   )
-  // }, [])
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latitude = position.coords.latitude
+        const longitude = position.coords.longitude
+        setPosition({ lat: latitude, lng: longitude })
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }, [])
 
   const onMapLoad = useCallback((map: any) => {
     mapRef.current = map
@@ -82,10 +82,12 @@ export default function Home(props: HomeProps) {
               key={campaign.id}
               position={{ lat: campaign.coordinate.lat, lng: campaign.coordinate.lng }}
               onClick={() => onShowModalCampaigns(campaign.coordinate.lat, campaign.coordinate.lng)}
+              title='point'
             />
           ))}
       </GoogleMap>
       <Search />
+      <div>ok</div>
 
       <Modal
         className='absolute top-0 right-0 !m-[unset] !pb-0 bg-white'

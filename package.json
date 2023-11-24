@@ -11,8 +11,10 @@
     "prettier": "prettier --check \"src/**/(*.tsx|*.ts|*.css|*.scss)\"",
     "prettier:fix": "prettier --write \"src/**/(*.tsx|*.ts|*.css|*.scss)\"",
     "preview": "vite preview",
-    "test": "vitest src/pages/register/register.test.tsx",
-    "coverage": "vitest run --coverage"
+    "test": "vitest src/pages/home/home.test.tsx",
+    "coverage": "vitest run --coverage",
+    "watch": "vitest run --watch",
+    "ui": "vitest --ui"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
@@ -47,6 +49,7 @@
     "@typescript-eslint/parser": "^6.7.0",
     "@vitejs/plugin-react": "^4.0.3",
     "@vitest/coverage-v8": "^0.34.6",
+    "@vitest/ui": "^0.34.6",
     "autoprefixer": "^10.4.15",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",

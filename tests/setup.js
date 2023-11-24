@@ -1,4 +1,4 @@
-import { afterEach } from 'vitest'
+import { afterEach, vi, vitest } from 'vitest'
 import { cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
 
@@ -6,3 +6,9 @@ import '@testing-library/jest-dom/vitest'
 afterEach(() => {
   cleanup()
 })
+
+const mockGeolocation = {
+  getCurrentPosition: vi.fn(),
+  watchPosition: vi.fn()
+}
+global.navigator.geolocation = mockGeolocation

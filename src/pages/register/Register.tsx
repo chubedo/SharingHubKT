@@ -122,6 +122,7 @@ export default function Register(props: RegisterProps) {
               />
             </div>
             <Button
+              disabled={registerMutation.isLoading}
               loading={registerMutation.isLoading}
               className='mt-12 w-full h-14 text-base'
               type='primary'

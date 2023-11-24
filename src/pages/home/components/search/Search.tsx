@@ -36,7 +36,7 @@ export default function Search(props: SearchProps) {
   }
 
   return (
-    <div>
+    <div id='search-campaigns'>
       <Button
         className='absolute top-8 left-1/2 -translate-x-1/2 flex items-center justify-center gap-2 z-10 w-[600px] p-7 rounded-xl'
         type='primary'

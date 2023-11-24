@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import '@testing-library/jest-dom'
 import App from 'src/App'
 import { vi, beforeEach, describe, expect, test } from 'vitest'
+import { toast } from 'react-toastify'
 
 beforeEach(async () => {
   await render(<App />, { wrapper: BrowserRouter }) // called once before all tests run
@@ -114,7 +115,7 @@ describe('Trang register', () => {
     await userEvent.type(confirmPasswordInput, 'Long')
     expect(confirmPasswordInput.value).toBe('Long')
   })
-  test('Nhập đúng định dạng password', async () => {
+  test('Nhập đúng định dạng confirm password', async () => {
     const confirmPasswordInput = (await document.getElementById('floating_CFpassword')) as HTMLInputElement
     const passwordInput = (await document.getElementById('floating_password')) as HTMLInputElement
     const buttonSubmit = (await document.getElementById('button_register')) as HTMLButtonElement
@@ -125,7 +126,7 @@ describe('Trang register', () => {
     await userEvent.click(buttonSubmit)
     expect(error.textContent).toBe('')
   })
-  test('Nhập sai định dạng password(Không match với password)', async () => {
+  test('Nhập sai confirm password(Không match với password)', async () => {
     const confirmPasswordInput = (await document.getElementById('floating_CFpassword')) as HTMLInputElement
     const buttonSubmit = (await document.getElementById('button_register')) as HTMLButtonElement
     const error = (await document.getElementById('error_cf_password')) as HTMLElement
@@ -133,7 +134,7 @@ describe('Trang register', () => {
     await userEvent.click(buttonSubmit)
     expect(error.textContent).toBe('Confirm password must be match')
   })
-  test('Nhập sai định dạng password(Không đúng định dạng)', async () => {
+  test('Nhập sai confirm password(Không đúng định dạng)', async () => {
     const confirmPasswordInput = (await document.getElementById('floating_CFpassword')) as HTMLInputElement
     const passwordInput = (await document.getElementById('floating_password')) as HTMLInputElement
     const buttonSubmit = (await document.getElementById('button_register')) as HTMLButtonElement
@@ -155,6 +156,40 @@ describe('Trang register', () => {
     expect(checkbox).not.toBeChecked()
   })
 
+  test('Đăng ký không thành công do chưa đồng ý điều khoản', async () => {
+    const nameInput = (await document.getElementById('floating_name')) as HTMLInputElement
+    const emailInput = (await document.getElementById('floating_email')) as HTMLInputElement
+    const passwordInput = (await document.getElementById('floating_password')) as HTMLInputElement
+    const confirmPasswordInput = (await document.getElementById('floating_CFpassword')) as HTMLInputElement
+    const buttonSubmit = (await document.getElementById('button_register')) as HTMLButtonElement
+
+    await userEvent.type(nameInput, 'tuyen')
+    await userEvent.type(emailInput, 'tuyen1233345566778@gmail.com')
+    await userEvent.type(passwordInput, '12345678')
+    await userEvent.type(confirmPasswordInput, '12345678')
+    await userEvent.click(buttonSubmit)
+    expect(screen.queryByText('Please, I agree with Terms and Privacy')).toBeInTheDocument()
+    // screen.debug(document.body.parentElement as HTMLElement, 9999999)
+  })
+  test('Đăng ký thất bại do email đã được đăng ký', async () => {
+    const nameInput = (await document.getElementById('floating_name')) as HTMLInputElement
+    const emailInput = (await document.getElementById('floating_email')) as HTMLInputElement
+    const passwordInput = (await document.getElementById('floating_password')) as HTMLInputElement
+    const confirmPasswordInput = (await document.getElementById('floating_CFpassword')) as HTMLInputElement
+    const buttonSubmit = (await document.getElementById('button_register')) as HTMLButtonElement
+
+    await userEvent.type(nameInput, 'tuyen')
+    await userEvent.type(emailInput, 'tuyen12@gmail.com')
+    await userEvent.type(passwordInput, '12345678')
+    await userEvent.type(confirmPasswordInput, '12345678')
+    await userEvent.click(buttonSubmit)
+    const buySpy = vi.spyOn(toast, 'error')
+    toast.error('This email is already existed')
+    await waitFor(() => {
+      expect(buySpy).toHaveBeenCalledWith('This email is already existed')
+    })
+  })
+
   test('Đăng ký thành công', async () => {
     const nameInput = (await document.getElementById('floating_name')) as HTMLInputElement
     const emailInput = (await document.getElementById('floating_email')) as HTMLInputElement
@@ -164,16 +199,25 @@ describe('Trang register', () => {
     const checkbox = screen.getByRole('checkbox')
 
     await userEvent.type(nameInput, 'tuyen')
-    await userEvent.type(emailInput, 'tuyen1233345566778@gmail.com')
+    await userEvent.type(emailInput, 'tuyen3458899@gmail.com')
     await userEvent.type(passwordInput, '12345678')
     await userEvent.type(confirmPasswordInput, '12345678')
     await userEvent.click(checkbox)
     await userEvent.click(buttonSubmit)
+    await waitFor(
+      () => {
+        expect(document.querySelector('#title')?.textContent).toBe('Sign in')
+      },
+      {
+        interval: 1000,
+        timeout: 5000
+      }
+    )
   })
 
-  // test('Click button chuyển hướng qua trang register', async () => {
-  //   const register = document.getElementById('button_redirect_register') as HTMLButtonElement
-  //   await userEvent.click(register)
-  //   expect(screen.queryByTitle('sign up')).toBeInTheDocument()
-  // })
+  test('Click button chuyển hướng qua trang login', async () => {
+    const register = document.getElementById('redirect_login') as HTMLButtonElement
+    await userEvent.click(register)
+    expect(screen.queryByTitle('Sign in')).toBeInTheDocument()
+  })
 })

@@ -53,16 +53,16 @@ export default function Login(props: LoginProps) {
   })
 
   const handleOnSubmit = handleSubmit((data) => {
-    loginMutation.mutate(data, {
-      onSuccess: (data) => {
-        toast.success(data.data.message)
-        setIsAuthenticated(true)
-        setProfile(data.data.user)
-        navigate(path.home)
-      }
-    })
-    // setIsAuthenticated(true)
-    // navigate(path.home)
+    // loginMutation.mutate(data, {
+    //   onSuccess: (data) => {
+    //     toast.success(data.data.message)
+    //     setIsAuthenticated(true)
+    //     setProfile(data.data.user)
+    //     navigate(path.home)
+    //   }
+    // })
+    setIsAuthenticated(true)
+    navigate(path.home)
   })
 
   return (
@@ -97,7 +97,7 @@ export default function Login(props: LoginProps) {
           </Select>
         </div>
         <div className='flex flex-col gap-4 p-0 md:p-8 lg:p-6 lg:pl-10'>
-          <h1 className='text-left text-4xl font-bold' id='title'>
+          <h1 className='text-left text-4xl font-bold' id='title' title='Sign in'>
             Sign in
           </h1>
           <form className='mt-6 flex flex-col items-center w-full' onSubmit={handleOnSubmit}>
@@ -127,6 +127,7 @@ export default function Login(props: LoginProps) {
               </Checkbox>
             </div>
             <Button
+              disabled={loginMutation.isLoading}
               loading={loginMutation.isLoading}
               className='mt-12 w-full h-14 text-base'
               type='primary'

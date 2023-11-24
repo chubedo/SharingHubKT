@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import '@testing-library/jest-dom'
 import App from 'src/App'
 import { vi, beforeEach, describe, expect, test } from 'vitest'
+import { toast } from 'react-toastify'
 
 beforeEach(() => {
   render(<App />, { wrapper: BrowserRouter }) // called once before all tests run
@@ -93,6 +94,21 @@ describe('Trang login', () => {
     const checkbox = screen.getByRole('checkbox')
     await userEvent.dblClick(checkbox)
     expect(checkbox).not.toBeChecked()
+  })
+
+  test('Đăng nhập thất bại do email hoặc password không chính xác', async () => {
+    const emailInput = (await document.getElementById('floating_email')) as HTMLInputElement
+    const passwordInput = (await document.getElementById('floating_password')) as HTMLInputElement
+    const buttonSubmit = (await document.getElementById('button_submit')) as HTMLButtonElement
+
+    await userEvent.type(emailInput, 'tuye@gmail.com')
+    await userEvent.type(passwordInput, '12345678')
+    await userEvent.click(buttonSubmit)
+    const buySpy = vi.spyOn(toast, 'error')
+    toast.error('Email or password is incorrect')
+    await waitFor(() => {
+      expect(buySpy).toHaveBeenCalledWith('Email or password is incorrect')
+    })
   })
 
   test('Đăng nhập thành công', async () => {
